@@ -3,9 +3,9 @@ Conflux JSON-RPC API是一组接口的集合，允许您使用JSON-RPC协议中�
 以下是带有示例的API参考文档。
 
 ## JSON-RPC
-JSON是一种轻量级的数据交换格式。 它可以表示数字，字符串，有序数值队列，和键值对集合。
+JSON是一种轻量级的数据交换格式。 它可以表示数字，字符串，有序数值队列，和键值对的集合。
 
-JSON-RPC是一种无状态、轻量级的远程过程调用（RPC）协议。该规范主要定义了几种数据结构以及与之相关的处理规则。它是与传输方式无关的，可以用在socket、HTTP 或各种消息传送环境。 它使用JSON（RFC 4627）作为数据格式。
+JSON-RPC是一种无状态、轻量级的远程过程调用（RPC）协议。该规范主要定义了几种数据结构以及与之相关的处理规则。它与传输方式无关，可以用在socket、HTTP 或各种消息传送环境。它使用JSON（RFC 4627）作为数据格式。
 
 
 ## JavaScript API
@@ -15,9 +15,9 @@ JSON-RPC是一种无状态、轻量级的远程过程调用（RPC）协议。该
 目前，Conflux拥有一个支持JSON-RPC 2.0和HTTP的[Rust 实现](https://github.com/Conflux-Chain/conflux-rust) 。
 
 ## 十六进制值的编码
-当前，通过JSON传输，有两种关键数据类型：无格式字节数组和数量。 两者都以十六进制编码传输，但有不同的格式要求：
+目前，通过JSON传输可传输两种关键数据类型：无格式字节数组和数量。 两者都以十六进制编码传输，但有不同的格式要求：
 
-当编码**数量**（整数，数字）时：编码为十六进制，前缀为“ 0x”，这是最紧凑的表现形式（小例外：零表示为“ 0x0”）。 例子：
+当编码**数量**（整数，数字）时：编码为十六进制，前缀为“ 0x”，这是最紧凑的表现形式（小例外：零表示为“ 0x0”）。 举例：
 
 * 0x41 （十进制65）
 * 0x400 （十进制1024）
@@ -70,16 +70,16 @@ Curl选项可能会返回一个关于content type报错的响应，这是因为 
 范例也包含了URL/IP和端口的组合，它们必须作为最后的参数传给curl。
 例如 ```http://localhost:12345```
 
-例子： [cfx_getbestblockhash](#cfx_getbestblockhash)
+举例： [cfx_getbestblockhash](#cfx_getbestblockhash)
 
 ```
 curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getBestBlockHash","params":[],"id":1}' -H "Content-Type: application/json" http://localhost:12345
 ```
 
-## 从 Ethereum JSON-RPC 移植
-以太坊和Conflux之间，一些JSON-RPCs存在对应关系。
+## 从 以太坊 JSON-RPC 移植
+Conflux和以太坊之间，一些JSON-RPCs存在对应关系。
 
-尽管JSON-RPC的细节可能彼此不同，以下映射表有助于从以太坊迁移到Conflux：
+尽管JSON-RPC的细节可能彼此不同，但以下映射表将有助于从以太坊到Conflux的迁移：
 * eth_gasPrice => cfx_gasPrice
 * eth_blockNumber => cfx_epochNumber
 * eth_getBalance => cfx_getBalance
@@ -97,7 +97,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getBestBlockHash","params":[
 
 ## JSON-RPC 方法
 #### cfx_getTransactionByHash 
-通过交易哈希值，返回交易的信息。
+通过交易哈希值，获得交易的信息。
 ##### 参数
  1. DATA, 32 Bytes - 交易的哈希值
 ```
@@ -110,11 +110,11 @@ params: [
 * `blockHash`: `DATA`, 32字节-此交易存在并已执行的区块的哈希。交易等待状态时为`null`。
 * `contractCreated`: `DATA`，20字节-已创建的合约地址。当为不创建交易的合约时为`null`。
 * `data`: `DATA` - 与交易一起发送的数据。
-* `from`: `DATA`, 20字节-发送方地址。
+* `from`: `DATA`, 20字节-发送者地址。
 * `gas`: `QUANTITY` - 发送者提供的gas。
-* `gasPrice`: `QUANTITY` - 发送方提供的gas价格（以Drip为单位）。
+* `gasPrice`: `QUANTITY` - 发送者提供的gas价格（以Drip为单位）。
 * `hash`: `DATA`, 32字节-交易的哈希。
-* `nonce`: `QUANTITY` - 发送方在此之前进行的交易次数。
+* `nonce`: `QUANTITY` - 发送者在此之前进行的交易次数。
 * `r`: `DATA`, 32字节-ECDSA签名r。
 * `s`: `DATA`, 32字节-ECDSA签名s。
 * `status`: `QUANTITY` - 0代表成功，1代表发生错误，当交易被跳过或未打包时为`null` 。
@@ -402,19 +402,19 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getStakingBalance","params":
 
 
 #### cfx_getCollateralForStorage
-Returns the size of the collateral storage of given address, in Byte.
-##### Parameters
-1. `DATA`, 20 Bytes - address to check for collateral storage.
-2. `QUANTITY|TAG` - integer epoch number, or the string "latest_mined",  "latest_state", "earliest", see the [epoch number parameter](#the-epoch-number-parameter)
+返回给定地址的抵押品存储大小，以字节为单位。
+##### 参数
+1. `DATA`, 20 Bytes - 待检查抵押品存储的地址。
+2. `QUANTITY|TAG` - 纪元号, 或字符串 "latest_mined",  "latest_state", "earliest", 详见 [epoch number parameter](#the-epoch-number-parameter)
 ```
 params: [
    '0xc94770007dda54cF92009BFF0dE90c06F603a09f',
    'latest_state'
 ]
 ```
-##### Returns
-`QUANTITY` - integer of the collateral storage in Byte.
-##### Example
+##### 返回值
+`QUANTITY` - 抵押存储的整数，以字节为单位。
+##### 使用范例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getCollateralForStorage","params":["0xc94770007dda54cF92009BFF0dE90c06F603a09f", "latest_state"],"id":1}'
@@ -430,19 +430,19 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getCollateralForStorage","pa
 ---
 
 #### cfx_getAdmin
-Returns the admin of given contract.
-##### Parameters
-1. `DATA`, 20 Bytes - address to contract.
-2. `QUANTITY|TAG` - integer epoch number, or the string "latest_mined",  "latest_state", "earliest", see the [epoch number parameter](#the-epoch-number-parameter)
+返回给定合约的管理员。
+##### 参数
+1. `DATA`, 20 Bytes - 合约地址。
+2. `QUANTITY|TAG` - 纪元号, 或字符串 "latest_mined",  "latest_state", "earliest", 详见 [epoch number parameter](#the-epoch-number-parameter)
 ```
 params: [
     '0x8af71f222b6e05b47d8385fe437fe2f2a9ec1f1f',
     'latest_state'
 ]
 ```
-##### Returns
-`DATA` - 20 Bytes - address to admin, or `0x0000000000000000000000000000000000000000` if the contract does not exist.
-##### Example
+##### 返回值
+`DATA` - 20 Bytes - 管理员地址, 或 `0x0000000000000000000000000000000000000000` 如果合约不存在。
+##### 使用范例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getAdmin","params":["0x8af71f222b6e05b47d8385fe437fe2f2a9ec1f1f"],"id":1}'
@@ -458,19 +458,19 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getAdmin","params":["0x8af71
 ---
 
 #### cfx_getCode
-Returns the code of given contract.
-##### Parameters
-1. `DATA`, 20 Bytes - address to contract.
-2. `QUANTITY|TAG` - integer epoch number, or the string "latest_mined",  "latest_state", "earliest", see the [epoch number parameter](#the-epoch-number-parameter)
+返回给定合约的code。
+##### 参数
+1. `DATA`, 20 Bytes - 合约地址。
+2. `QUANTITY|TAG` - 纪元号, 或字符串 "latest_mined",  "latest_state", "earliest", 详见 [epoch number parameter](#the-epoch-number-parameter)
 ```
 params: [
     '0x8af71f222b6e05b47d8385fe437fe2f2a9ec1f1f',
     'latest_state'
 ]
 ```
-##### Returns
-`DATA` - byte code of contract, or `0x` if the contract does not exist.
-##### Example
+##### 返回值
+`DATA` - 合约的字节码byte code, 如果合约不存在返回`0x` 。
+##### 使用范例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getCode","params":["0x8af71f222b6e05b47d8385fe437fe2f2a9ec1f1f","latest_state"],"id":1}'
@@ -486,11 +486,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getCode","params":["0x8af71f
 ---
 
 #### cfx_getStorageAt
-Returns storage entries from a given contract.
-##### Parameters
-1. `DATA`, 20 Bytes - address to contract.
-2. `DATA`, 32 Bytes - the given position.
-3. `QUANTITY|TAG` - integer epoch number, or the string "latest_mined",  "latest_state", "earliest", see the [epoch number parameter](#the-epoch-number-parameter)
+返回给定合约的存储条目。
+##### 参数
+1. `DATA`, 20 Bytes - 合约地址。
+2. `DATA`, 32 Bytes - 指定位置。
+3. `QUANTITY|TAG` - 纪元号, 或字符串 "latest_mined",  "latest_state", "earliest", 详见 [epoch number parameter](#the-epoch-number-parameter)
 ```
 params: [
     '0x8af71f222b6e05b47d8385fe437fe2f2a9ec1f1f',
@@ -498,9 +498,9 @@ params: [
     'latest_state'
 ]
 ```
-##### Returns
-`DATA` - 32 Bytes - storage entry of given query, or `null` if the it does not exist.
-##### Example
+##### 返回值
+`DATA` - 32 Bytes - 给定查询的存储条目；如果不存在，则为 `null`。
+##### 使用范例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getStorageAt","params":["0x8af71f222b6e05b47d8385fe437fe2f2a9ec1f1f","0x6661e9d6d8b923d5bbaab1b96e1dd51ff6ea2a93520fdc9eb75d059238b8c5e9","latest_state"],"id":1}'
@@ -516,12 +516,10 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getStorageAt","params":["0x8
 ---
 
 #### cfx_getStorageRoot
-
-Returns the storage root of a given contract.
-
-##### Parameters
-1. `DATA`, 20 Bytes - address to contract.
-2. `QUANTITY|TAG` - integer epoch number, or the string "latest_mined", "latest_state", "earliest", see the [epoch number parameter](#the-epoch-number-parameter)
+返回给定合约的存储根位置。
+##### 参数
+1. `DATA`, 20 Bytes - 合约地址。
+2. `QUANTITY|TAG` - 纪元号, 或字符串 "latest_mined",  "latest_state", "earliest", 详见 [epoch number parameter](#the-epoch-number-parameter)
 ```
 params: [
     '0x8af71f222b6e05b47d8385fe437fe2f2a9ec1f1f',
@@ -529,22 +527,21 @@ params: [
 ]
 ```
 
-##### Returns
+##### 返回值
 
-`Object` - A storage root object, or `null` if the contract does not exist:
+`Object` - 存储根对象, 如果合约不存在返回`null` :
 
-* `delta`: `DATA`, 32 Bytes - storage root in the delta trie.
-* `intermediate`: `DATA`, 32 Bytes - storage root in the intermediate trie.
-* `snapshot`: `DATA`, 32 Bytes - storage root in the snapshot.
+* `delta`: `DATA`, 32 Bytes - delta排序下的存储根。
+* `intermediate`: `DATA`, 32 Bytes - intermediate排序中的存储根.
+* `snapshot`: `DATA`, 32 Bytes - 快照中的存储根。
 
-If all three of these fields match for two invocations of this RPC, the contract's storage is guaranteed to be identical.
-If they do not match, storage has likely changed (or the system transitioned into a new era).
+如果所有这三个字段可以匹配此RPC的两次调用，则可保证合约的存储是相同的。 如果它们不匹配，则存储可能已更改（或系统已过渡到新状态）。
 
 <!---
 TODO: Add links to snapshot/checkpoint documentation.
 -->
 
-##### Example
+##### 使用范例
 
 ```
 // Request
@@ -565,26 +562,26 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getStorageRoot","params":["0
 ---
 
 #### cfx_getSponsorInfo
-Returns the sponsor info of given contract.
-##### Parameters
-1. `DATA`, 20 Bytes - address to contract.
-2. `QUANTITY|TAG` - integer epoch number, or the string "latest_mined",  "latest_state", "earliest", see the [epoch number parameter](#the-epoch-number-parameter)
+返回给定合约的赞助者信息。
+##### 参数
+1. `DATA`, 20 Bytes - 合约地址。
+2. `QUANTITY|TAG` - 纪元号, 或字符串 "latest_mined",  "latest_state", "earliest", 详见 [epoch number parameter](#the-epoch-number-parameter)
 ```
 params: [
     '0x8af71f222b6e05b47d8385fe437fe2f2a9ec1f1f',
     'latest_state'
 ]
 ```
-##### Returns
-`Object` - A sponsor info object, if the contract doesn't have a sponsor, then the all fields in returned object will be `0`:
+##### 返回值
+`Object` - 发起人信息对象，如果合同合约中没有赞助者，则返回对象中的所有字段均为`0`：
 
-   * `sponsorBalanceForCollateral`: `QUANTITY` - the sponsored balance for storage.
-   * `sponsorBalanceForGas`: `QUANTITY` - the sponsored balance for gas.
-   * `sponsorGasBound`: `QUANTITY` - the max gas could be sponsored for one transaction.
-   * `sponsorForCollateral`: `DATA`, 20 Bytes - the address of the storage sponsor.
-   * `sponsorForGas`: `DATA`, 20 Bytes - the address of the gas sponsor.
+   * `sponsorBalanceForCollateral`: `QUANTITY` - 赞助账户的抵押余额。
+   * `sponsorBalanceForGas`: `QUANTITY` - 赞助账户的gas余额。
+   * `sponsorGasBound`: `QUANTITY` - 每次赞助交易的gas使用上限。
+   * `sponsorForCollateral`: `DATA`, 20 Bytes - 抵押赞助者的地址。
+   * `sponsorForGas`: `DATA`, 20 Bytes - gas赞助者的地址。
 
-##### Example
+##### 使用范例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getSponsorInfo","params":["0x8af71f222b6e05b47d8385fe437fe2f2a9ec1f1f"],"id":1}'
@@ -605,21 +602,20 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getSponsorInfo","params":["0
 
 ---
 #### cfx_getNextNonce
-Returns the next nonce should be used by given address.
-
-##### Parameters
-1. `DATA`, 20 Bytes - address.
-2. `QUANTITY|TAG` - integer epoch number, or the string "latest_mined",  "latest_state", "earliest", see the [epoch number parameter](#the-epoch-number-parameter)
+返回给定地址应使用的下一个nonce。
+##### 参数
+1. `DATA`, 20 Bytes - 地址.
+2. `QUANTITY|TAG` - 纪元号, 或字符串 "latest_mined",  "latest_state", "earliest", 详见 [epoch number parameter](#the-epoch-number-parameter)
 ```
 params: [
     '0xfbe45681ac6c53d5a40475f7526bac1fe7590fb8',
     'latest_state' // state at the latest executed epoch
 ]
 ```
-##### Returns
-`QUANTITY` - integer of the next nonce should be used by given address.
+##### 返回值
+`QUANTITY` - 给定地址应使用的下一个nonce。
 
-##### Example
+##### 使用范例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getNextNonce","params":["0xfbe45681ac6c53d5a40475f7526bac1fe7590fb8", 'latest_state'],"id":1}'
@@ -634,17 +630,17 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getNextNonce","params":["0xf
 
 ---
 #### cfx_sendRawTransaction
-Creates new message call transaction or a contract creation for signed transactions.
-##### Parameters
-`DATA`, The signed transaction data.
+为已签名的交易创建新的消息呼叫交易或合约。
+##### 参数
+`DATA`, 已签名的交易数据。
 ```
 params: [
     '0xf86eea8201a28207d0830f4240943838197c0c88d0d5b13b67e1bfdbdc132d4842e389056bc75e2d631000008080a017b8b26f473820475edc49bd153660e56b973b5985bbdb2828fceacb4c91f389a03452f9a69da34ef35acc9c554d7b1d63e9041141674b42c3abb1b57b9f83a2d3'
 ]
 ```
-##### Returns
-`DATA`, 32 Bytes - the transaction hash, or the zero hash if the transaction is not yet available.
-##### Example
+##### 返回值
+`DATA`, 32 Bytes - 交易哈希，如果交易尚不可用，则为零哈希。
+##### 使用范例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_sendRawTransaction","params":[{see above}],"id":1}'
@@ -660,20 +656,19 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_sendRawTransaction","params"
 ---
 
 #### cfx_call
-Virtually call a contract, return the output data.
+虚拟调用合约，返回输出数据。
 
-##### Parameters
-1. `Object` - A call request object:
+##### 参数
+1. `Object` - call请求对象：A call request object:
+* `from`: `DATA`, 20 Bytes - （可选，默认值：随机地址）发送者的地址。
+* `to`: `DATA`, 20 Bytes - （可选，默认值：合约创建为`null`）接受者的地址。
+* `gasPrice`: `QUANTITY` - （可选，默认：`0`）发送者提供的gas价格（以Drip为单位）。
+* `gas`: `QUANTITY` - （可选，默认值：`500000000`）发送者提供的gas。
+* `value`: `QUANTITY` - （可选，默认值：`0`）传输的值（以Drip为单位）。
+* `data`: `DATA` - （可选，默认值：`0x`）与交易一起发送的数据。
+* `nonce`: `QUANTITY` - （可选，默认值：`0`）发送者在此之前进行的交易次数。
 
-      * `from`: `DATA`, 20 Bytes - (optional, default: random address) address of sender.
-* `to`: `DATA`, 20 Bytes - (optional, default: `null` for contract creation) address of receiver.
-* `gasPrice`: `QUANTITY` - (optional, default: `0`) gas price provided by the sender in Drip.
-* `gas`: `QUANTITY` - (optional, default: `500000000`) gas provided by the sender.
-* `value`: `QUANTITY` - (optional, default: `0`) value transferred in Drip.
-* `data`: `DATA` - (optional, default: `0x`) the data send along with the transaction.
-* `nonce`: `QUANTITY` - (optional, default: `0`) the number of transactions made by the sender prior to this one.
-
-2. `QUANTITY|TAG` - integer epoch number, or the string "latest_mined",  "latest_state", "earliest", see the [epoch number parameter](#the-epoch-number-parameter)
+2. `QUANTITY|TAG` - 纪元号, 或字符串 "latest_mined",  "latest_state", "earliest", 详见 [epoch number parameter](#the-epoch-number-parameter)
 
 ```
 params: [
@@ -687,9 +682,9 @@ params: [
     'latest_state' // state at the latest executed epoch
 ]
 ```
-##### Returns
-`DATA`, Bytes - the output data.
-##### Example
+##### 返回值
+`DATA`, Bytes - 输出数据。
+##### 使用范例
 ```
 // Request
 curl -X POST --data '{"method":"cfx_call","id":1,"jsonrpc":"2.0","params":[{"from":"0xf6B7219AF657e14B5103e915839dD12f51cDBA68","to":"0x63428378C5D7d168c9Ef2809a76812d40E018Ac9","data":"0x","gasPrice":"0x2540be400", "nonce": "0x0"}]}'
@@ -705,10 +700,9 @@ curl -X POST --data '{"method":"cfx_call","id":1,"jsonrpc":"2.0","params":[{"fro
 ---
 
 #### cfx_estimateGasAndCollateral
-Virtually call a contract, return the output data.
-
-##### Parameters
-See [cfx_call](#cfx_call).
+虚拟调用合约，返回输出数据。
+##### 参数
+见 [cfx_call](#cfx_call).
 
 ```
 params: [
@@ -722,12 +716,12 @@ params: [
     'latest_state' // state at the latest executed epoch
 ]
 ```
-##### Returns
-`Object` - A estimate result object:
-   * `gasUsed`: `QUANTITY` - gas used after execution.
-   * `storageCollateralized`: `QUANTITY` - stroage collateralized, in Byte.
+##### 返回值
+`Object` - 预估的结果对象：
+   * `gasUsed`: `QUANTITY` - 执行后使用的gas。
+   * `storageCollateralized`: `QUANTITY` - 抵押存储，以字节为单位。
 
-##### Example
+##### 使用范例
 ```
 // Request
 curl -X POST --data '{"method":"cfx_estimateGasAndCollateral","id":1,"jsonrpc":"2.0","params":[{"from":"0xf6B7219AF657e14B5103e915839dD12f51cDBA68","to":"0x63428378C5D7d168c9Ef2809a76812d40E018Ac9","data":"0x","gasPrice":"0x2540be400", "nonce": "0x0"}]}'
@@ -746,35 +740,34 @@ curl -X POST --data '{"method":"cfx_estimateGasAndCollateral","id":1,"jsonrpc":"
 ---
 
 #### cfx_getLogs
-Returns logs matching the filter provided.
+返回与提供的过滤条件匹配的日志。
 ##### Parameters
-`Object` - A log filter object:
-
-   * `fromEpoch`: `QUANTITY` - (optional, default: `"earliest"`) search will be applied from this epoch number.
-   * `toEpoch`: `QUANTITY` - (optional, default: `"latest_mined"`) till this epoch number.
-   * `blockHashes`: `Array` of `DATA` - (optional, default: `null`) Array of block hashes that the search will be applied. This will override from/to epoch fields if it's not `null`.
-   * `address`: `Array` of `DATA` - (optional, default: `null`) Search addresses, If `null`, match all. If specified, log must be produced by one of these addresses.
-   * `topics`: `Array` - (optional, default: `null`) Search topics. Logs can have `4` topics: the function signature and up to `3` indexed event arguments. The elements of `topics` match the corresponding log topics. Example: `["0xA", null, ["0xB", "0xC"], null]` matches logs with `"0xA"` as the 1st topic AND (`"0xB"` OR `"0xC"`) as the 3rd topic. If `null`, match all.
-   * `limit`: `QUANTITY` - (optional, default: `null`) If `null` return all logs, otherwise should only return **last** `limit` logs.
+`Object` - 日志过滤器对象:
+   * `fromEpoch`: `QUANTITY` -（可选，默认值：`"earliest"`）将从该纪元号开始搜索。
+   * `toEpoch`: `QUANTITY` - （可选，默认值：`"latest_mined"`），直到此纪元编号为止。
+   * `blockHashes`: `Array` of `DATA` - （可选，默认值：`null`）将应用搜索的区块哈希数组。如果不为空，它将覆盖开始和结束的纪元号字段。
+   * `address`: `Array` of `DATA` - （可选，默认值：`null`）搜索地址，如果为`null`，则全部匹配。如果指定，日志必须由这些地址之一生成。
+   * `topics`: `Array` - (可选, 默认值: `null`) 搜索主题. 日志有 `4` 种主题:函数签名和最多`3`个有索引的事件参数。`topics`元素与相应的日志主题相匹配。举例: `["0xA", null, ["0xB", "0xC"], null]` 匹配日志以 `"0xA"` 为第一个主题 并且 (`"0xB"` 或 `"0xC"`) 为第三个主题。 如果为 `null`, 匹配所有。
+   * `limit`: `QUANTITY` - (可选, 默认值: `null`) 如果为 `null` 返回所有值, 否则仅返回 **last** `limit` 日志。
 ```
 params: [
     {}
 ]
 ```
-##### Returns
-`Array` - Array of Log `Object`, that the logs matching the filter provided:
+##### 返回值
+`Array` - 日志 `Object`的数组,与提供的过滤条件相匹配的日志:
 
-   * `address`: `DATA`, 20 Bytes - address of log.
-   * `topics`: `Array` of `DATA` - Array of topics.
-   * `data`: `DATA` - data of log.
-   * `blockHash`: `DATA` - 32 Bytes - hash of the block where the log in.
-   * `epochNumber`: `QUANTITY` - epoch number of the block where the log in.
-   * `transactionHash`: `DATA`, 32 Bytes - hash of the transaction where the log in.
-   * `transactionIndex`: `QUANTITY` - transaction index in the block.
-   * `logIndex`: `QUANTITY` - log index in block.
-   * `transactionLogIndex`: `QUANTITY` - log index in transaction.
+   * `address`: `DATA`, 20 Bytes - 日志地址。
+   * `topics`: `Array` of `DATA` - 主题数组。
+   * `data`: `DATA` - 日志数据。
+   * `blockHash`: `DATA` - 32 Bytes - 日志所在区块的哈希。
+   * `epochNumber`: `QUANTITY` - 日志所在区块的纪元号。
+   * `transactionHash`: `DATA`, 32 Bytes - 日志所在交易的哈希。
+   * `transactionIndex`: `QUANTITY` - 区块中的交易索引。
+   * `logIndex`: `QUANTITY` - 区块中的日志索引。
+   * `transactionLogIndex`: `QUANTITY` - 交易中的日志索引。
 
-##### Example
+##### 使用范例
 ```
 // Request
  curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getLogs","params":[{}],"id":1}'
@@ -820,31 +813,30 @@ params: [
 ---
 
 #### cfx_getTransactionReceipt
-Returns the information about a transaction receipt requested by transaction hash.
-##### Parameters
- 1. DATA, 32 Bytes - hash of a transaction
+返回有关交易哈希请求的交易收据的信息。
+##### 参数
+ 1. DATA, 32 Bytes - 交易哈希。
 ```
 params: [
     '0x53fe995edeec7d241791ff32635244e94ecfd722c9fe90f34ddf59082d814514',
 ]
 ```
-##### Returns
-`Object` - A transaction receipt object, or `null` when no transaction was found or the transaction was not executed yet:
+##### 返回值
+`Object` - 交易接收对象，如果未找到交易或尚未执行交易，则为`null` ：
+* `transactionHash`: `DATA`, 32 Bytes - 给定交易的哈希。
+* `index`: `QUANTITY` - 区块内的交易索引。
+* `blockHash`: `DATA`, 32 Bytes - 此交易所在并已执行的区块的哈希。
+* `epochNumber`: `QUANTITY` - 此交易在其中执行的区块的纪元号。
+* `from`: `DATA`, 20 Bytes - 发送方的地址。
+* `to`: `DATA`, 20 Bytes - 接收者的地址。当其为合约创建的交易时为`null`。
+* `gasUsed`: `QUANTITY` - 交易中使用的gas。
+* `contractCreated`: `DATA`, 20 Bytes - 已创建的合约地址。为非合约创建的交易时为`null`。
+* `stateRoot`: `DATA`, 32 Bytes - 状态根的哈希值。
+* `outcomeStatus`: `QUANTITY` - 结果状态代码。
+* `logsBloom`: `DATA`, 256 Bytes - bloom过滤器，用于轻客户端快速检索相关日志。
+* `logs`: `Array` - 此交易生成的日志对象数组, 见 [cfx_getLogs](#cfx_getlogs)
 
-* `transactionHash`: `DATA`, 32 Bytes - hash of the given transaction.
-* `index`: `QUANTITY` - transaction index within the block.
-* `blockHash`: `DATA`, 32 Bytes - hash of the block where this transaction was in and got executed.
-* `epochNumber`: `QUANTITY` - epoch number of the block where this transaction was in and got executed.
-* `from`: `DATA`, 20 Bytes - address of the sender.
-* `to`: `DATA`, 20 Bytes - address of the receiver. `null` when its a contract creation transaction.
-* `gasUsed`: `QUANTITY` - gas used the transaction.
-* `contractCreated`: `DATA`, 20 Bytes - address of created contract. `null` when it's not a contract creating transaction.
-* `stateRoot`: `DATA`, 32 Bytes - hash of the state root.
-* `outcomeStatus`: `QUANTITY` - the outcome status code.
-* `logsBloom`: `DATA`, 256 Bytes - bloom filter for light clients to quickly retrieve related logs.
-* `logs`: `Array` - Array of log objects, which this transaction generated, see [cfx_getLogs](#cfx_getlogs)
-
-##### Example
+##### 使用范例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getTransactionReceipt","params":["0x53fe995edeec7d241791ff32635244e94ecfd722c9fe90f34ddf59082d814514"],"id":1}'
@@ -872,28 +864,27 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getTransactionReceipt","para
 ---
 
 #### cfx_getAccount
-Return account related states of the given account
-##### Parameters
-1. `DATA`, 20 Bytes - address to get account.
-2. `QUANTITY|TAG` - integer epoch number, or the string "latest_mined",  "latest_state", "earliest", see the [epoch number parameter](#the-epoch-number-parameter)
+返回给定帐户的相关状态。
+##### 参数
+1. `DATA`, 20 Bytes - 待获取帐户的地址
+2. `QUANTITY|TAG` - 纪元号, 或字符串 "latest_mined",  "latest_state", "earliest", 详见 [epoch number parameter](#the-epoch-number-parameter)
 ```
 params: [
    '0xc94770007dda54cF92009BFF0dE90c06F603a09f',
    'latest_state'
 ]
 ```
-##### Returns
-`Object` - states of the given account:
+##### 返回值
+`Object` - 给定帐户的状态:
+* `balance`: `QUANTITY` - 账户余额。
+* `nonce`: `QUANTITY` - 帐户下一次交易的nonce。
+* `codeHash`: `QUANTITY` - 帐户的code哈希。
+* `stakingBalance`: `QUANTITY` - 帐户的质押余额。
+* `collateralForStorage`: `QUANTITY` - 帐户的抵押品存储。
+* `accumulatedInterestReturn`: `QUANTITY` -帐户的累计无误收益。
+* `admin`: DATA`, 20 Bytes - 账户的管理者。
 
-* `balance`: `QUANTITY` - the balance of the account.
-* `nonce`: `QUANTITY` - the nonce of the account's next transaction.
-* `codeHash`: `QUANTITY` - the code hash of the account.
-* `stakingBalance`: `QUANTITY` - the staking balance of the account.
-* `collateralForStorage`: `QUANTITY` - the collateral storage of the account.
-* `accumulatedInterestReturn`: `QUANTITY` -accumulated unterest return of the account.
-* `admin`: DATA`, 20 Bytes - admin of the account.
-
-##### Example
+##### 使用范例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getAccount","params":["0x8af71f222b6e05b47d8385fe437fe2f2a9ec1f1f", "latest_state"],"id":1}'
@@ -918,17 +909,17 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getAccount","params":["0x8af
 
 
 #### cfx_getInterestRate
-Returns the interest rate of given parameter.
-##### Parameters
-`TAG` - (optional, default: "latest_mined") String "latest_mined",  "latest_state" or "earliest", see the [epoch number parameter](#the-epoch-number-parameter).
+返回给定参数的利率。
+##### 参数
+`TAG` - (可选, 默认值: "latest_mined") 字符串 "latest_mined",  "latest_state" 或 "earliest", 详见 [epoch number parameter](#the-epoch-number-parameter)。
 ```
 params: [
    'latest_state'
 ]
 ```
-##### Returns
-`QUANTITY` - the interest rate of given parameter.
-##### Example
+##### 返回值
+`QUANTITY` - 给定参数的利率。
+##### 使用范例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getInterestRate","params":["latest_state"],"id":1}'
@@ -944,17 +935,17 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getInterestRate","params":["
 ---
 
 #### cfx_getAccumulateInterestRate
-Returns the accumulate interest rate of given parameter.
+返回给定参数的累计利率。
 ##### Parameters
-`TAG` - (optional, default: "latest_mined") String "latest_mined",  "latest_state" or "earliest", see the [epoch number parameter](#the-epoch-number-parameter).
+`TAG` - (可选, 默认值: "latest_mined") 字符串 "latest_mined",  "latest_state" 或 "earliest", 详见 [epoch number parameter](#the-epoch-number-parameter)。
 ```
 params: [
    'latest_state'
 ]
 ```
-##### Returns
-`QUANTITY` - the accumulate interest rate of given parameter.
-##### Example
+##### 返回值
+`QUANTITY` - 给定参数的累计利率。
+##### 使用范例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getAccumulateInterestRate","params":["latest_state"],"id":1}'
