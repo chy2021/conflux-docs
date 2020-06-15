@@ -6,8 +6,8 @@ Portal是由MetaMask继承而来，MetaMask中有多种签名方法，你可以�
 
 ## ConfluxPortal中有何改善[#](https://developer.conflux-chain.org/docs/introduction/en/conflux_overview/#what-changed-in-confluxportal)
 
-* 我们将`personal_sign`逻辑优化为`cfx_sign`逻辑。并且我们推荐使用 `cfx_sign`方法来代替 `personal_sign`。
-* 在这里`signTypedData`, `signTypedData_v1`, `signTypedData_v3`和`signTypedData_v4`的原理仍然和MetaMask一样。但是我们计划在主网上线前对其进行优化。
+* 我们使用`personal_sign`的逻辑来优化`cfx_sign`方法。同时我们推荐使用 `cfx_sign`方法而不是 `personal_sign`方法。
+* 目前`signTypedData`, `signTypedData_v1`, `signTypedData_v3`和`signTypedData_v4`的运行原理和MetaMask一样。但是我们计划在主网上线前对其进行优化。
 
  
 
