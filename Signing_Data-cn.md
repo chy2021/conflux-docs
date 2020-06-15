@@ -1,8 +1,8 @@
 # 使用Conflux Portal浏览器插件钱包对数据签名
 
-## 签名方法的历史[#](https://developer.conflux-chain.org/docs/introduction/en/conflux_overview/#history-of-the-signing-methods)
+## 签名方法的演变[#](https://developer.conflux-chain.org/docs/introduction/en/conflux_overview/#history-of-the-signing-methods)
 
-Portal是由MetaMask继承而来，MetaMask中有多种签名方法，你可以在MetaMask文档中查阅所有历史签名方法。
+Portal是由MetaMask继承而来，MetaMask中有多种签名方法，你可以在MetaMask文档中查阅所有签名方法。
 
 ## ConfluxPortal中有何改善[#](https://developer.conflux-chain.org/docs/introduction/en/conflux_overview/#what-changed-in-confluxportal)
 
