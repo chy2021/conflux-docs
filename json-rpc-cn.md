@@ -402,9 +402,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getStakingBalance","params":
 
 
 #### cfx_getCollateralForStorage
-返回给定地址的抵押品存储大小，以字节为单位。
+返回给定地址的抵押存储单位大小，以字节为单位。
 ##### 参数
-1. `DATA`, 20 Bytes - 待检查抵押品存储的地址。
+1. `DATA`, 20 Bytes - 待检查抵押存储单位的地址。
 2. `QUANTITY|TAG` - 纪元号, 或字符串 "latest_mined",  "latest_state", "earliest", 详见 [epoch number parameter](#the-epoch-number-parameter)
 ```
 params: [
@@ -413,7 +413,7 @@ params: [
 ]
 ```
 ##### 返回值
-`QUANTITY` - 抵押存储的整数，以字节为单位。
+`QUANTITY` - 抵押存储单位的大小，以字节为单位。
 ##### 使用范例
 ```
 // Request
@@ -719,7 +719,7 @@ params: [
 ##### 返回值
 `Object` - 预估的结果对象：
    * `gasUsed`: `QUANTITY` - 执行后使用的gas。
-   * `storageCollateralized`: `QUANTITY` - 抵押存储，以字节为单位。
+   * `storageCollateralized`: `QUANTITY` - 抵押存储单位（以字节为单位）。
 
 ##### 使用范例
 ```
@@ -880,7 +880,7 @@ params: [
 * `nonce`: `QUANTITY` - 帐户下一次交易的nonce。
 * `codeHash`: `QUANTITY` - 帐户的code哈希。
 * `stakingBalance`: `QUANTITY` - 帐户的质押余额。
-* `collateralForStorage`: `QUANTITY` - 帐户的抵押品存储。
+* `collateralForStorage`: `QUANTITY` - 帐户的抵押存储单位。
 * `accumulatedInterestReturn`: `QUANTITY` -帐户的累计无误收益。
 * `admin`: DATA`, 20 Bytes - 账户的管理者。
 
