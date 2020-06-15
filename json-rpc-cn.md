@@ -110,11 +110,11 @@ params: [
 * `blockHash`: `DATA`, 32字节-此交易存在并已执行的区块的哈希。交易等待状态时为`null`。
 * `contractCreated`: `DATA`，20字节-已创建的合约地址。当为不创建交易的合约时为`null`。
 * `data`: `DATA` - 与交易一起发送的数据。
-* `from`: `DATA`, 20字节-发送方地址。
+* `from`: `DATA`, 20字节-发送者地址。
 * `gas`: `QUANTITY` - 发送者提供的gas。
-* `gasPrice`: `QUANTITY` - 发送方提供的gas价格（以Drip为单位）。
+* `gasPrice`: `QUANTITY` - 发送者提供的gas价格（以Drip为单位）。
 * `hash`: `DATA`, 32字节-交易的哈希。
-* `nonce`: `QUANTITY` - 发送方在此之前进行的交易次数。
+* `nonce`: `QUANTITY` - 发送者在此之前进行的交易次数。
 * `r`: `DATA`, 32字节-ECDSA签名r。
 * `s`: `DATA`, 32字节-ECDSA签名s。
 * `status`: `QUANTITY` - 0代表成功，1代表发生错误，当交易被跳过或未打包时为`null` 。
@@ -373,9 +373,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cfx_getBalance","params":["0xc94
 ---
 
 #### cfx_getStakingBalance
-返回给定地址的抵押帐户的余额。
+返回给定地址的质押帐户的余额。
 ##### 参数
-1. `DATA`, 20 Bytes - 待检查抵押余额的地址。
+1. `DATA`, 20 Bytes - 待检查质押余额的地址。
 2. `QUANTITY|TAG` - 纪元号, 或字符串 "latest_mined",  "latest_state", "earliest", 详见 [epoch number parameter](#the-epoch-number-parameter)
 ```
 params: [
@@ -384,7 +384,7 @@ params: [
 ]
 ```
 ##### 返回值
-`QUANTITY` - 当前抵押账户的余额（以Drip为单位）。
+`QUANTITY` - 当前质押账户的余额（以Drip为单位）。
 ##### 使用范例
 ```
 // Request
@@ -827,7 +827,7 @@ params: [
 * `index`: `QUANTITY` - 区块内的交易索引。
 * `blockHash`: `DATA`, 32 Bytes - 此交易所在并已执行的区块的哈希。
 * `epochNumber`: `QUANTITY` - 此交易在其中执行的区块的纪元号。
-* `from`: `DATA`, 20 Bytes - 发送方的地址。
+* `from`: `DATA`, 20 Bytes - 发送者的地址。
 * `to`: `DATA`, 20 Bytes - 接收者的地址。当其为合约创建的交易时为`null`。
 * `gasUsed`: `QUANTITY` - 交易中使用的gas。
 * `contractCreated`: `DATA`, 20 Bytes - 已创建的合约地址。为非合约创建的交易时为`null`。
