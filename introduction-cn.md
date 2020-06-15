@@ -1,8 +1,8 @@
 欢迎使用ConfluxPortal 的 开发者文档. ConfluxPortal 是 Conflux 版本的 [MetaMask](https://github.com/MetaMask/metamask-extension#readme). 本文档用于学习开发 ConfluxPortal 的应用。
 
 * 你可以在 [the github release page](https://github.com/Conflux-Chain/conflux-portal/releases) 找到ConfluxPortal的最新版本以及 [in this issue](https://github.com/Conflux-Chain/conflux-portal/issues/31) 上的安装说明。
-* 为了获得使用ConfluxPortal的帮助, 在我们的github repo上提交问题[submit issues](https://github.com/Conflux-Chain/conflux-portal/issues/new/choose) 。
-* 要了解如何为ConfluxPortal项目本身做出贡献, 访问我们的内部文档 [Internal Docs](https://github.com/Conflux-Chain/conflux-portal/tree/develop/docs)。
+* 为了获得使用ConfluxPortal的帮助, 欢迎在我们的github repo上提交问题[submit issues](https://github.com/Conflux-Chain/conflux-portal/issues/new/choose) 。
+* 要了解如何为ConfluxPortal项目本身做出贡献, 请访问我们的内部文档 [Internal Docs](https://github.com/Conflux-Chain/conflux-portal/tree/develop/docs)。
 ## 为什么是 ConfluxPortal 呢?
 
 创建ConfluxPortal是为了创建更安全可用的基于Conflux的网页。特别是，它进行帐户管理并且连接用户到区块链。
